@@ -1,10 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { SidebarNav } from "@/components/crm/sidebar-nav"
+import { SidebarNav, type ViewType } from "@/components/crm/sidebar-nav"
 import { SearchPanel } from "@/components/crm/search-panel"
 import { ResultsTable, type ClientResult } from "@/components/crm/results-table"
 import { ClientDetailPanel } from "@/components/crm/client-detail-panel"
+import { DashboardView } from "@/components/crm/views/dashboard-view"
+import { CampaignsView } from "@/components/crm/views/campaigns-view"
+import { DatabaseView } from "@/components/crm/views/database-view"
+import { DigitalMediaView } from "@/components/crm/views/digital-media-view"
+import { ReportsView } from "@/components/crm/views/reports-view"
+import { UsersView } from "@/components/crm/views/users-view"
 
 const mockResults: ClientResult[] = [
   {
@@ -49,9 +55,31 @@ const mockResults: ClientResult[] = [
   },
 ]
 
+const viewTitles: Record<ViewType, { title: string; breadcrumb: string }> = {
+  dashboard: { title: "Dashboard", breadcrumb: "Dashboard" },
+  campaigns: { title: "Campañas", breadcrumb: "Campañas" },
+  database: { title: "Gestión de Base", breadcrumb: "Gestión de Base" },
+  "digital-media": { title: "Medios Digitales", breadcrumb: "Medios Digitales" },
+  contacts: { title: "Buscador de Contactos", breadcrumb: "Buscador de Contactos" },
+  reports: { title: "Reportes", breadcrumb: "Reportes" },
+  "users-asesores": { title: "Gestión de Asesores", breadcrumb: "Gestión de Usuarios / Asesores" },
+  "users-coordinadores": { title: "Gestión de Coordinadores", breadcrumb: "Gestión de Usuarios / Coordinadores" },
+  "users-administradores": { title: "Gestión de Administradores", breadcrumb: "Gestión de Usuarios / Administradores" },
+}
+
 export default function CRMDashboard() {
+  const [activeView, setActiveView] = useState<ViewType>("contacts")
   const [showResults, setShowResults] = useState(false)
   const [selectedClient, setSelectedClient] = useState<ClientResult | null>(null)
+
+  const handleViewChange = (view: ViewType) => {
+    setActiveView(view)
+    // Reset contacts state when switching views
+    if (view !== "contacts") {
+      setShowResults(false)
+      setSelectedClient(null)
+    }
+  }
 
   const handleSearch = () => {
     setShowResults(true)
@@ -66,9 +94,48 @@ export default function CRMDashboard() {
     setSelectedClient(null)
   }
 
+  const renderContent = () => {
+    switch (activeView) {
+      case "dashboard":
+        return <DashboardView />
+      case "campaigns":
+        return <CampaignsView />
+      case "database":
+        return <DatabaseView />
+      case "digital-media":
+        return <DigitalMediaView />
+      case "reports":
+        return <ReportsView />
+      case "users-asesores":
+        return <UsersView userType="asesores" />
+      case "users-coordinadores":
+        return <UsersView userType="coordinadores" />
+      case "users-administradores":
+        return <UsersView userType="administradores" />
+      case "contacts":
+      default:
+        return (
+          <div className="space-y-6">
+            <SearchPanel
+              onSearch={handleSearch}
+              resultCount={showResults ? mockResults.length : 0}
+            />
+            {showResults && !selectedClient && (
+              <ResultsTable results={mockResults} onViewDetail={handleViewDetail} />
+            )}
+            {selectedClient && (
+              <ClientDetailPanel client={selectedClient} onClose={handleCloseDetail} />
+            )}
+          </div>
+        )
+    }
+  }
+
+  const currentView = viewTitles[activeView]
+
   return (
     <div className="flex min-h-screen bg-slate-100">
-      <SidebarNav />
+      <SidebarNav activeView={activeView} onViewChange={handleViewChange} />
 
       <main className="flex-1 overflow-auto">
         <div className="p-6 lg:p-8">
@@ -77,8 +144,8 @@ export default function CRMDashboard() {
             <nav className="text-sm text-slate-500 mb-2">
               <span>Dashboard</span>
               <span className="mx-2">/</span>
-              <span className="text-slate-800 font-medium">Buscador de Contactos</span>
-              {selectedClient && (
+              <span className="text-slate-800 font-medium">{currentView.breadcrumb}</span>
+              {activeView === "contacts" && selectedClient && (
                 <>
                   <span className="mx-2">/</span>
                   <span className="text-teal-600 font-medium">Ficha de Cliente</span>
@@ -86,28 +153,13 @@ export default function CRMDashboard() {
               )}
             </nav>
             <h1 className="text-2xl font-bold text-slate-800">
-              Buscador de Contactos {selectedClient && "/ Ficha de Cliente"}
+              {currentView.title}
+              {activeView === "contacts" && selectedClient && " / Ficha de Cliente"}
             </h1>
           </div>
 
-          {/* Content */}
-          <div className="space-y-6">
-            {/* Search Panel */}
-            <SearchPanel
-              onSearch={handleSearch}
-              resultCount={showResults ? mockResults.length : 0}
-            />
-
-            {/* Results Table */}
-            {showResults && !selectedClient && (
-              <ResultsTable results={mockResults} onViewDetail={handleViewDetail} />
-            )}
-
-            {/* Client Detail Panel */}
-            {selectedClient && (
-              <ClientDetailPanel client={selectedClient} onClose={handleCloseDetail} />
-            )}
-          </div>
+          {/* Dynamic Content */}
+          {renderContent()}
         </div>
       </main>
     </div>
