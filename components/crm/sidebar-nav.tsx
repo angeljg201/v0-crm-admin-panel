@@ -15,12 +15,15 @@ import {
   UserCog,
   UserCheck,
   Shield,
+  BookOpen,
+  Layers,
 } from "lucide-react"
 
 export type ViewType = 
   | "dashboard"
   | "campaigns"
-  | "database"
+  | "courses"
+  | "editions"
   | "digital-media"
   | "contacts"
   | "reports"
@@ -38,7 +41,14 @@ interface NavItem {
 const navItems: NavItem[] = [
   { label: "Dashboard", icon: <LayoutDashboard className="h-5 w-5" />, view: "dashboard" },
   { label: "Campañas", icon: <Megaphone className="h-5 w-5" />, view: "campaigns" },
-  { label: "Gestión de Base", icon: <Database className="h-5 w-5" />, view: "database" },
+  {
+    label: "Académico",
+    icon: <Database className="h-5 w-5" />,
+    children: [
+      { label: "Cursos", icon: <BookOpen className="h-4 w-4" />, view: "courses" },
+      { label: "Ediciones", icon: <Layers className="h-4 w-4" />, view: "editions" },
+    ],
+  },
   { label: "Medios Digitales", icon: <Globe className="h-5 w-5" />, view: "digital-media" },
   { label: "Buscador de Contactos", icon: <Search className="h-5 w-5" />, view: "contacts" },
   { label: "Reportes", icon: <BarChart3 className="h-5 w-5" />, view: "reports" },

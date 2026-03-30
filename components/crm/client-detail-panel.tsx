@@ -31,7 +31,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { X, CreditCard, Eye, Plus, Calendar, Phone, Mail, MapPin, Edit, Trash2, CheckCircle2, Clock, AlertCircle } from "lucide-react"
+import { X, CreditCard, Eye, Plus, Calendar, Phone, Mail, MapPin, Edit, Trash2, CheckCircle2, Clock, AlertCircle, GraduationCap, FileText, AlertTriangle, Receipt, UploadCloud, Link2 } from "lucide-react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import type { ClientResult } from "./results-table"
@@ -153,6 +153,10 @@ const tareasCliente = [
 export function ClientDetailPanel({ client, onClose }: ClientDetailPanelProps) {
   const [consentimientoDatos, setConsentimientoDatos] = useState(true)
   const [aceptaPublicidad, setAceptaPublicidad] = useState(false)
+  const [showMoodleAccess, setShowMoodleAccess] = useState(true)
+  const [moodleId, setMoodleId] = useState<string | null>("Pendiente")
+  const [isEditionClosed, setIsEditionClosed] = useState(false)
+  const [registroPagoOpen, setRegistroPagoOpen] = useState(false)
 
   const getActionTypeBadge = (tipo: string) => {
     const colors: Record<string, string> = {
@@ -250,6 +254,12 @@ export function ClientDetailPanel({ client, onClose }: ClientDetailPanelProps) {
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-teal-600 data-[state=active]:bg-transparent data-[state=active]:text-teal-700 px-4 py-3 text-sm font-medium"
               >
                 Datos Admisión
+              </TabsTrigger>
+              <TabsTrigger
+                value="pagos"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-teal-600 data-[state=active]:bg-transparent data-[state=active]:text-teal-700 px-4 py-3 text-sm font-medium"
+              >
+                Pagos y Facturación
               </TabsTrigger>
               <TabsTrigger
                 value="seguimiento-telemarketing"
@@ -694,98 +704,279 @@ export function ClientDetailPanel({ client, onClose }: ClientDetailPanelProps) {
               <div>
                 <h3 className="text-base font-semibold text-slate-800 mb-4 flex items-center gap-2">
                   <div className="h-1 w-1 rounded-full bg-teal-600" />
-                  Información de Admisión
+                  Información de la Edición Actual
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label className="text-sm text-slate-600">Campaña</Label>
-                    <Select defaultValue="verano-2024">
-                      <SelectTrigger className="h-9">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="verano-2024">Verano 2024</SelectItem>
-                        <SelectItem value="invierno-2024">Invierno 2024</SelectItem>
-                      </SelectContent>
-                    </Select>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-1">
+                    <p className="text-sm text-slate-500 font-medium">Curso</p>
+                    <p className="text-sm font-semibold text-slate-800">Power BI para Negocios</p>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-sm text-slate-600">Modalidad de Admisión</Label>
-                    <Select defaultValue="examen">
-                      <SelectTrigger className="h-9">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="examen">Examen Regular</SelectItem>
-                        <SelectItem value="tercio">Tercio Superior</SelectItem>
-                        <SelectItem value="traslado">Traslado Externo</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="space-y-1">
+                    <p className="text-sm text-slate-500 font-medium flex items-center gap-1">
+                      Fecha de Inicio
+                      <Link2 className="h-3 w-3 text-teal-600" />
+                    </p>
+                    <p className="text-sm font-semibold text-slate-800">15 de Mayo, 2024</p>
+                    <p className="text-[10px] text-slate-400 leading-tight">Sincronizado con edición global</p>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-sm text-slate-600">Sede de Interés</Label>
-                    <Select defaultValue="lima-centro">
-                      <SelectTrigger className="h-9">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="lima-centro">Lima Centro</SelectItem>
-                        <SelectItem value="lima-norte">Lima Norte</SelectItem>
-                        <SelectItem value="surco">Surco</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="space-y-1">
+                    <p className="text-sm text-slate-500 font-medium">Duración</p>
+                    <p className="text-sm font-semibold text-slate-800">5 meses</p>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-sm text-slate-600">Carrera que postula</Label>
-                    <Input defaultValue="Ingeniería de Software" className="h-9" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-sm text-slate-600">Estatus Admisión</Label>
-                    <div className="pt-1">
-                      <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 hover:bg-emerald-100">Admitido</Badge>
-                    </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-slate-500 font-medium">Modalidad</p>
+                    <p className="text-sm font-semibold text-slate-800">Virtual En Vivo</p>
                   </div>
                 </div>
               </div>
 
-              <div>
+              <div className="border-t border-slate-100 pt-6">
                 <h3 className="text-base font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                  <div className="h-1 w-1 rounded-full bg-teal-600" />
-                  Información de Pago
+                  <FileText className="h-4 w-4 text-teal-600" />
+                  Documentos Entregados
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
-                  <div className="space-y-2">
-                    <Label className="text-sm text-slate-600">Monto de Matrícula</Label>
-                    <Input defaultValue="S/. 440.00" disabled className="h-9 bg-slate-50 font-medium" />
+                <div className="flex flex-col sm:flex-row gap-6">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="doc-dni" defaultChecked />
+                    <Label htmlFor="doc-dni" className="text-sm text-slate-700 font-medium cursor-pointer">
+                      DNI (Copia simple)
+                    </Label>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-sm text-slate-600">Fecha de Pago</Label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                      <Input type="date" defaultValue="2024-03-20" className="h-9 pl-9" />
-                    </div>
-                  </div>
-                  <div className="space-y-3 pb-1">
-                    <Label className="text-sm text-slate-600">¿Pagante 1ra Boleta?</Label>
-                    <RadioGroup defaultValue="si" className="flex gap-4">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="si" id="r1" />
-                        <Label htmlFor="r1" className="cursor-pointer">Sí</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="no" id="r2" />
-                        <Label htmlFor="r2" className="cursor-pointer">No</Label>
-                      </div>
-                    </RadioGroup>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="doc-ficha" defaultChecked />
+                    <Label htmlFor="doc-ficha" className="text-sm text-slate-700 font-medium cursor-pointer">
+                      Ficha de Inscripción Firmada
+                    </Label>
                   </div>
                 </div>
               </div>
+
+              {showMoodleAccess && (
+                <div className="mt-8 border-t border-slate-100 pt-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-base font-semibold text-slate-800 flex items-center gap-2">
+                      <div className="h-8 w-8 rounded-lg bg-teal-100 flex items-center justify-center">
+                        <GraduationCap className="h-5 w-5 text-teal-700" />
+                      </div>
+                      Acceso al Aula Virtual (Moodle)
+                    </h3>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-100 rounded-xl p-6 shadow-sm">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium text-teal-800">Usuario (Email)</Label>
+                        <Input value={client.email} disabled className="h-10 bg-white/80 border-teal-200 text-slate-600" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium text-teal-800">Nombres</Label>
+                        <Input value={client.nombres} disabled className="h-10 bg-white/80 border-teal-200 text-slate-600" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium text-teal-800">Apellidos</Label>
+                        <Input value={client.apellidos} disabled className="h-10 bg-white/80 border-teal-200 text-slate-600" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label className="text-sm font-bold text-teal-900">ID Usuario Moodle</Label>
+                        <div className="relative">
+                          <Input 
+                            value={moodleId || "Pendiente"} 
+                            disabled 
+                            className="h-10 bg-white border-teal-300 font-mono text-sm text-slate-700 font-semibold shadow-inner" 
+                          />
+                          {moodleId !== "Pendiente" && (
+                            <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-500" />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                       <p className="text-sm text-teal-800 font-medium bg-teal-100/50 px-3 py-1.5 rounded-md border border-teal-200">
+                         Se matriculará en la edición: <strong className="font-bold">PBI-01</strong> - Inicio: <strong>15 May 2024</strong>
+                       </p>
+                       <Button 
+                         onClick={() => setMoodleId("MDL-" + Math.floor(1000 + Math.random() * 9000))}
+                         disabled={moodleId !== "Pendiente" || isEditionClosed}
+                         className={`gap-2 h-10 px-6 transition-all ${
+                           moodleId !== "Pendiente"
+                            ? "bg-slate-200 text-slate-500 hover:bg-slate-200 cursor-not-allowed" 
+                            : isEditionClosed 
+                              ? "bg-red-100 text-red-600 hover:bg-red-100 cursor-not-allowed border-red-200"
+                              : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-md hover:shadow-lg"
+                         }`}
+                       >
+                         {isEditionClosed ? (
+                           <>
+                             <AlertTriangle className="h-4 w-4" />
+                             Edición Cerrada
+                           </>
+                         ) : moodleId !== "Pendiente" ? (
+                           <>
+                             <CheckCircle2 className="h-4 w-4" />
+                             Estudiante Matriculado
+                           </>
+                         ) : (
+                           <>
+                             <GraduationCap className="h-5 w-5" />
+                             Matricular en Moodle
+                           </>
+                         )}
+                       </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
               <div className="flex justify-end pt-4 border-t border-slate-100">
                 <Button className="bg-teal-600 hover:bg-teal-700 text-white">
                   Guardar Datos de Admisión
                 </Button>
               </div>
             </div>
+          </TabsContent>
+
+          {/* Pagos y Facturación Tab */}
+          <TabsContent value="pagos" className="p-6 mt-0">
+             <div className="space-y-8">
+                {/* Financial Resumen */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Card className="border-slate-200 shadow-sm">
+                    <CardContent className="p-5 flex flex-col justify-center">
+                      <p className="text-sm font-medium text-slate-500 mb-1">Total a Pagar</p>
+                      <p className="text-2xl font-bold text-slate-800">S/. 500.00</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="border-slate-200 shadow-sm bg-emerald-50/50">
+                    <CardContent className="p-5 flex flex-col justify-center">
+                      <p className="text-sm font-medium text-emerald-700 mb-1">Total Pagado</p>
+                      <p className="text-2xl font-bold text-emerald-700">S/. 200.00</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="border-red-200 shadow-sm bg-red-50 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded-bl-lg">
+                      Bloquear Certificado por Deuda
+                    </div>
+                    <CardContent className="p-5 flex flex-col justify-center">
+                      <p className="text-sm font-medium text-red-700 mb-1">Saldo Pendiente</p>
+                      <p className="text-2xl font-bold text-red-700">S/. 300.00</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Orders Table */}
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-base font-semibold text-slate-800 flex items-center gap-2">
+                       <Receipt className="h-4 w-4 text-teal-600" />
+                       Órdenes Generadas
+                    </h3>
+                  </div>
+                  <div className="overflow-x-auto border border-slate-200 rounded-lg">
+                    <Table>
+                      <TableHeader className="bg-slate-50">
+                        <TableRow>
+                          <TableHead className="font-semibold text-slate-700">Código Orden</TableHead>
+                          <TableHead className="font-semibold text-slate-700">Producto</TableHead>
+                          <TableHead className="font-semibold text-slate-700 text-right">Monto Total</TableHead>
+                          <TableHead className="font-semibold text-slate-700 text-center">Estado</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                         <TableRow className="hover:bg-slate-50">
+                            <TableCell className="font-medium text-slate-700">ORD-2024-001</TableCell>
+                            <TableCell className="text-slate-600">Power BI para Negocios - Edición Virtual</TableCell>
+                            <TableCell className="text-slate-700 font-medium text-right">S/. 500.00</TableCell>
+                            <TableCell className="text-center">
+                               <Badge variant="outline" className="bg-amber-100 text-amber-700 border-amber-200">PENDING</Badge>
+                            </TableCell>
+                         </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+
+                {/* Payments Section */}
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-base font-semibold text-slate-800 flex items-center gap-2">
+                       <CreditCard className="h-4 w-4 text-teal-600" />
+                       Historial de Pagos
+                    </h3>
+                    <Dialog open={registroPagoOpen} onOpenChange={setRegistroPagoOpen}>
+                      <DialogTrigger asChild>
+                        <Button className="bg-teal-600 hover:bg-teal-700 text-white gap-2">
+                          <Plus className="h-4 w-4" />
+                          Registrar Nuevo Pago
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                          <DialogTitle>Registrar Nuevo Pago</DialogTitle>
+                        </DialogHeader>
+                        <div className="space-y-4 py-4 mt-2">
+                          <div className="space-y-2">
+                            <Label>Monto (S/.)</Label>
+                            <Input type="number" defaultValue="300" />
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Método de Pago</Label>
+                            <Select defaultValue="transferencia">
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="yape">Yape</SelectItem>
+                                <SelectItem value="plin">Plin</SelectItem>
+                                <SelectItem value="transferencia">Transferencia Bancaria</SelectItem>
+                                <SelectItem value="tarjeta">Tarjeta (Culqi/Niubiz)</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Comprobante o Referencia</Label>
+                            <div className="border-2 border-dashed border-slate-200 rounded-lg p-6 flex flex-col items-center justify-center text-slate-500 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors">
+                               <UploadCloud className="h-8 w-8 mb-2 text-slate-400" />
+                               <p className="text-sm font-medium">Haga clic o arrastre la imagen aquí</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex justify-end gap-2">
+                          <Button variant="outline" onClick={() => setRegistroPagoOpen(false)}>Cancelar</Button>
+                          <Button className="bg-teal-600 text-white hover:bg-teal-700" onClick={() => setRegistroPagoOpen(false)}>
+                            Guardar Pago
+                          </Button>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+
+                  <div className="overflow-x-auto border border-slate-200 rounded-lg">
+                    <Table>
+                      <TableHeader className="bg-slate-50">
+                        <TableRow>
+                          <TableHead className="font-semibold text-slate-700">Fecha</TableHead>
+                          <TableHead className="font-semibold text-slate-700">Método</TableHead>
+                          <TableHead className="font-semibold text-slate-700 text-right">Monto</TableHead>
+                          <TableHead className="font-semibold text-slate-700 text-center">Estado del Pago</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                         <TableRow className="hover:bg-slate-50">
+                            <TableCell className="text-slate-600">15 Mar 2024</TableCell>
+                            <TableCell className="text-slate-600">Transferencia Bancaria</TableCell>
+                            <TableCell className="text-slate-700 font-medium text-right">S/. 200.00</TableCell>
+                            <TableCell className="text-center">
+                               <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 hover:bg-emerald-100">CONFIRMED</Badge>
+                            </TableCell>
+                         </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+
+             </div>
           </TabsContent>
 
           {/* Tareas Tab */}

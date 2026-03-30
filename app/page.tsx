@@ -7,7 +7,8 @@ import { ResultsTable, type ClientResult } from "@/components/crm/results-table"
 import { ClientDetailPanel } from "@/components/crm/client-detail-panel"
 import { DashboardView } from "@/components/crm/views/dashboard-view"
 import { CampaignsView } from "@/components/crm/views/campaigns-view"
-import { DatabaseView } from "@/components/crm/views/database-view"
+import { CoursesView } from "@/components/crm/views/courses-view"
+import { EditionsView } from "@/components/crm/views/editions-view"
 import { DigitalMediaView } from "@/components/crm/views/digital-media-view"
 import { ReportsView } from "@/components/crm/views/reports-view"
 import { UsersView } from "@/components/crm/views/users-view"
@@ -58,7 +59,8 @@ const mockResults: ClientResult[] = [
 const viewTitles: Record<ViewType, { title: string; breadcrumb: string }> = {
   dashboard: { title: "Dashboard", breadcrumb: "Dashboard" },
   campaigns: { title: "Campañas", breadcrumb: "Campañas" },
-  database: { title: "Gestión de Base", breadcrumb: "Gestión de Base" },
+  courses: { title: "Gestión de Cursos", breadcrumb: "Académico / Cursos" },
+  editions: { title: "Gestión de Ediciones", breadcrumb: "Académico / Ediciones" },
   "digital-media": { title: "Medios Digitales", breadcrumb: "Medios Digitales" },
   contacts: { title: "Buscador de Contactos", breadcrumb: "Buscador de Contactos" },
   reports: { title: "Reportes", breadcrumb: "Reportes" },
@@ -100,8 +102,10 @@ export default function CRMDashboard() {
         return <DashboardView />
       case "campaigns":
         return <CampaignsView />
-      case "database":
-        return <DatabaseView />
+      case "courses":
+        return <CoursesView />
+      case "editions":
+        return <EditionsView />
       case "digital-media":
         return <DigitalMediaView />
       case "reports":
