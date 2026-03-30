@@ -190,12 +190,6 @@ export function ClientDetailPanel({ client, onClose }: ClientDetailPanelProps) {
                 Seguimiento Telemarketing
               </TabsTrigger>
               <TabsTrigger
-                value="seguimiento-counter"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-teal-600 data-[state=active]:bg-transparent data-[state=active]:text-teal-700 px-4 py-3 text-sm font-medium"
-              >
-                Seguimiento Counter
-              </TabsTrigger>
-              <TabsTrigger
                 value="tareas"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-teal-600 data-[state=active]:bg-transparent data-[state=active]:text-teal-700 px-4 py-3 text-sm font-medium"
               >
@@ -206,30 +200,6 @@ export function ClientDetailPanel({ client, onClose }: ClientDetailPanelProps) {
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-teal-600 data-[state=active]:bg-transparent data-[state=active]:text-teal-700 px-4 py-3 text-sm font-medium"
               >
                 Familiares
-              </TabsTrigger>
-              <TabsTrigger
-                value="beneficios"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-teal-600 data-[state=active]:bg-transparent data-[state=active]:text-teal-700 px-4 py-3 text-sm font-medium"
-              >
-                Beneficios
-              </TabsTrigger>
-              <TabsTrigger
-                value="oportunidades"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-teal-600 data-[state=active]:bg-transparent data-[state=active]:text-teal-700 px-4 py-3 text-sm font-medium"
-              >
-                Oportunidades
-              </TabsTrigger>
-              <TabsTrigger
-                value="estado-cuenta"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-teal-600 data-[state=active]:bg-transparent data-[state=active]:text-teal-700 px-4 py-3 text-sm font-medium"
-              >
-                Estado de Cuenta
-              </TabsTrigger>
-              <TabsTrigger
-                value="estado-integracion"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-teal-600 data-[state=active]:bg-transparent data-[state=active]:text-teal-700 px-4 py-3 text-sm font-medium"
-              >
-                Estado de Integración
               </TabsTrigger>
             </TabsList>
           </div>
@@ -595,12 +565,6 @@ export function ClientDetailPanel({ client, onClose }: ClientDetailPanelProps) {
             </div>
           </TabsContent>
 
-          <TabsContent value="seguimiento-counter" className="p-6 mt-0">
-            <div className="text-center py-12 text-slate-500">
-              <p>Contenido de Seguimiento Counter</p>
-            </div>
-          </TabsContent>
-
           <TabsContent value="tareas" className="p-6 mt-0">
             <div className="text-center py-12 text-slate-500">
               <p>Contenido de Tareas</p>
@@ -610,30 +574,6 @@ export function ClientDetailPanel({ client, onClose }: ClientDetailPanelProps) {
           <TabsContent value="familiares" className="p-6 mt-0">
             <div className="text-center py-12 text-slate-500">
               <p>Contenido de Familiares</p>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="beneficios" className="p-6 mt-0">
-            <div className="text-center py-12 text-slate-500">
-              <p>Contenido de Beneficios</p>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="oportunidades" className="p-6 mt-0">
-            <div className="text-center py-12 text-slate-500">
-              <p>Contenido de Oportunidades</p>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="estado-cuenta" className="p-6 mt-0">
-            <div className="text-center py-12 text-slate-500">
-              <p>Contenido de Estado de Cuenta</p>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="estado-integracion" className="p-6 mt-0">
-            <div className="text-center py-12 text-slate-500">
-              <p>Contenido de Estado de Integración</p>
             </div>
           </TabsContent>
         </Tabs>

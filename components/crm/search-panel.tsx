@@ -29,8 +29,7 @@ const emptyForm = {
   idCliente: "",
   genero: "",
   telefono: "",
-  celular1: "",
-  celular2: "",
+  celular: "",
   email: "",
   dni: "",
   unidadNegocio: "",
@@ -151,27 +150,15 @@ export function SearchPanel({ onSearch, resultCount }: SearchPanelProps) {
             />
           </div>
 
-          {/* Celular 1 */}
+          {/* Celular */}
           <div className="space-y-2">
-            <Label htmlFor="celular-1" className="text-sm font-medium text-slate-700">Celular 1</Label>
+            <Label htmlFor="celular" className="text-sm font-medium text-slate-700">Celular</Label>
             <Input
-              id="celular-1"
-              placeholder="Celular principal"
+              id="celular"
+              placeholder="Celular"
               className="h-9"
-              value={form.celular1}
-              onChange={(e) => set("celular1")(e.target.value)}
-            />
-          </div>
-
-          {/* Celular 2 */}
-          <div className="space-y-2">
-            <Label htmlFor="celular-2" className="text-sm font-medium text-slate-700">Celular 2</Label>
-            <Input
-              id="celular-2"
-              placeholder="Celular secundario"
-              className="h-9"
-              value={form.celular2}
-              onChange={(e) => set("celular2")(e.target.value)}
+              value={form.celular}
+              onChange={(e) => set("celular")(e.target.value)}
             />
           </div>
 

@@ -60,7 +60,7 @@ export function ResultsTable({ results, onViewDetail }: ResultsTableProps) {
                 <TableHead className="font-semibold text-slate-700">Apellidos</TableHead>
                 <TableHead className="font-semibold text-slate-700">Género</TableHead>
                 <TableHead className="font-semibold text-slate-700">Celular 1</TableHead>
-                <TableHead className="font-semibold text-slate-700">Email 1</TableHead>
+                <TableHead className="font-semibold text-slate-700">Email</TableHead>
                 <TableHead className="font-semibold text-slate-700 max-w-[200px]">
                   Dirección
                 </TableHead>
